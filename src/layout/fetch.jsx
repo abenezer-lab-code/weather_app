@@ -1,19 +1,18 @@
 
 import {useEffect,useState,createContext, useContext} from "react"
+
 const DataContext = createContext()
+
 export default function WeatherDataProvider({children}){
 const[latitude,setLatitude] = useState(9.03)
 const[longitude,setLongitude] = useState(38.74)
 const[isLoading,setIsLoading] = useState(true);
-
 const[country,setCountry] = useState("usa")
-
-const[tempUnit,setTempUNit] = useState("c")
-const[precipitationUnit,setPrecipitationUnit] = useState("");
-const[windSpeedUnit,setWindSpeedUnit] = useState("")
+const[tempUnit,setTempUNit] = useState("celsius")
+const[precipitationUnit,setPrecipitationUnit] = useState("mm");
+const[windSpeedUnit,setWindSpeedUnit] = useState("kmh")
 const[isError,setIsError] = useState(false);
 const[data,setData] = useState("")
-
 useEffect(()=>{
 const theWeek = ["Sun","Mon","Thue","Wed","Thu","fri","Sat"]
 const date = new Date();
