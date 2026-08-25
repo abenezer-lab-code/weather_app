@@ -26,7 +26,7 @@ The application should now be running locally.
 
 -Screenshot
 
-![screen shout](./screenshots/localhost_5173_.png)
+![screen shout](./screenshouts/localhost_5173_.png)
 - 🔮 Future Improvements
 
 - Improve component architecture and organization
