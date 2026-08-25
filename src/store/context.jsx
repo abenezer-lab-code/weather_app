@@ -9,8 +9,8 @@ const[latitude,setLatitude] = useState()
 const[longitude,setLongitude] = useState()
 const[isLoading,setIsLoading] = useState(true);
 const [countries,setCountries] = useState([])
-const[country,setCountry] = useState("usa")
-console.log(country,"country")
+const[country,setCountry] = useState("")
+
 const[tempUnit,setTempUnit] = useState("celsius")
 const[precipitationUnit,setPrecipitationUnit] = useState("inch");
 const[windSpeedUnit,setWindSpeedUnit] = useState("mph")

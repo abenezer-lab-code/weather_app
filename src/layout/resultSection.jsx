@@ -9,7 +9,7 @@ const {data,setData} = useContext(DataContext)
 
 
 return (
-<div className="grid sm:grid-cols-[1fr_1fr_1fr]   grid-cols-1 grid-rows-[auto_auto_auto] mx-3 my-4 gap-x-6 sm:px-10">
+<div className="grid sm:grid-cols-3   grid-cols-1 grid-rows-[auto_auto_auto] mx-3 my-5 gap-x-6 gap-y-1 sm:px-10">
 
 <CurrentWeatherDisplay datas = {data}/>
 <HourlyForeCast datas={data}/>
@@ -30,7 +30,7 @@ const {setSelectedCountry,selectedCountry} = useContext(DataContext)
 
 return (
 
- <div style={{background: isLoading &&"hsl(243, 27%, 20%)"}} className=" p-5 grid col-start-1 col-end-3 row-start-1 row-end-2 grid-cols-1 sm:grid-cols-2 sm:h-60 sm:grid-rows-1 items-center mb-2 rounded-2xl bg-[url('.\.\public\assets\images\bg-today-small.svg')] sm:bg-[url('.\.\public\assets\images\bg-today-large.svg')] bg-no-repeat bg-cover">
+ <div style={{background: isLoading &&"hsl(243, 27%, 20%)"}} className=" p-5 grid col-start-1 col-end-3 row-start-1 row-end-2 grid-cols-1 sm:grid-cols-2 sm:h-60 sm:grid-rows-1 items-center mb-2 rounded-2xl bg-[url('.\.\public\assets\images\bg-today-large.svg')] sm:bg-[url('.\.\public\assets\images\bg-today-large.svg')] bg-no-repeat bg-cover">
 <div className="text-center">
 <img hidden = {!isLoading} src='.\public\assets\images\icon-loading.svg' alt="Weather now" className="block w-17 m-auto"/> 
 <p className="text-2xl mb-2">{selectedCountry}</p>
@@ -50,7 +50,7 @@ const array = ["feels like","Humidity","Wind","Precipitation"]
 const {isLoading} = useContext(DataContext)
 
 if(isLoading){
-return <div  className="p-3 flex flex-wrap gap-2 justify-around row-start-2 col-start-1 col-end-3 sm:h-40">
+return <div  className="p-3 flex flex-wrap gap-2 justify-around mb-10 row-start-2 col-start-1 col-end-3 sm:h-40">
 {
    array.map((e)=>{
 
@@ -124,7 +124,7 @@ return (
 {
 theWeek.map((e,index)=>{
   return ( 
-<article className=" bg-[hsl(243_27%_20%)] p-4 rounded-md flex flex-col items-center h-40 w-15" key={`{${e}-${index}}`}>
+<article className=" bg-[hsl(243_27%_20%)] p-4 rounded-md flex flex-col items-center h-40 w-8" key={`{${e}-${index}}`}>
 
 </article>
   )
@@ -139,7 +139,7 @@ const dailyMaxWeather = datas?.daily?.temperature_2m_max;
 const dailyMinWeaterh = datas?.daily?.temperature_2m_min;
 const dailyWeatherCode = datas?.daily?.weather_code
 return (
-  <section className=" row-start-3 col-start-1 col-end-3">
+  <section className=" sm:my-10 my:19 row-start-3 col-start-1 col-end-3">
     <h3 className="text-bold text-md mb-2">Daily foreCast</h3>
     <div className="flex flex-wrap gap-3 justify-around">
     {
@@ -147,14 +147,15 @@ return (
 const weathecode = getWeatherImage(dailyWeatherCode[index])
      
 
-  return (  <article className=" bg-[hsl(243_27%_20%)] p-4 rounded-md flex flex-col items-center" key={`{${e}-${index}}`}>
+  return (  <article className=" w-24 bg-[hsl(243_27%_20%)] p-1 rounded-md flex flex-col items-center" key={`{${e}-${index}}`}>
 <div className="grid grid-column-1 grid-row-2 ">
 <p className="text-center">{theWeek[index]}</p>
 <img className="block w-19" src={weathecode} aria-hidden/>
 </div>
-<div className="flex">
-<p className="text-center">{e}</p>
+<div className="flex gap-2 mx-auto items-center">
+<p className="">{e}</p>
 <p>{dailyMinWeaterh[index]}</p>
+<p></p>
 </div>
 
     </article>)
