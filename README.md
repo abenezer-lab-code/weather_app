@@ -24,10 +24,10 @@ This project was built mainly using:
 
 The application should now be running locally.
 
-## 📸 Screenshot
+-Screenshot
 
-
-## 🔮 Future Improvements
+![image]("./screenshouts/localhost_5173_.png")
+- 🔮 Future Improvements
 
 - Improve component architecture and organization
 - Improve animations and UI interactions
