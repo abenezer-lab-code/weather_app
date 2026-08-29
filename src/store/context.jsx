@@ -4,13 +4,16 @@ import useDebounce from "../toolkit/debouncer";
 const DataContext = createContext();
 
 const ProvideData = ({children})=>{
-
+console.log("render")
 const[latitude,setLatitude] = useState()
 const[longitude,setLongitude] = useState()
 const[isLoading,setIsLoading] = useState(true);
 const [countries,setCountries] = useState([])
+console.log(countries)
 const[country,setCountry] = useState("")
-
+const [isSrcLoading,setIsSrcLoading] = useState(true)
+const[isSrcErr,setSrcErr] = useState(false)
+console.log(isSrcLoading)
 const[tempUnit,setTempUnit] = useState("celsius")
 const[precipitationUnit,setPrecipitationUnit] = useState("inch");
 const[windSpeedUnit,setWindSpeedUnit] = useState("mph")
@@ -36,7 +39,7 @@ const getCurrentPositions = new Promise((resolve,reject)=>{
 
 })
 
-getCurrentPositions.then((result,error)=>{
+getCurrentPositions.then((result)=>{
     console.log(result)
     setLatitude(result.coords.latitude)
     setLongitude(result.coords.longitude)
@@ -57,11 +60,15 @@ console.log("waiting")
   
 function handleFetch(name){
 const countries = fetchLocation(name)
+
 countries.then((result)=>{
+    
     setCountries(result.countries.results)
 
 })
-
+.catch((error)=> setSrcErr(error))
+.finally(()=>setIsSrcLoading(false)
+   )
 
 }
 
@@ -77,13 +84,13 @@ console.log("waiting")
 
 function  handleFetch(lats,longs,tempU,windUnit,preUnit){
 
-const fetchedData = fetchWeather(lats,longs,tempUnit,windUnit,preUnit)
+const fetchedData = fetchWeather(lats,longs,tempU,windUnit,preUnit)
 fetchedData.then((result)=>{
 
 setData(result.data)
 setIsError(result.isError)
 setIsLoading(result.isLoading)
-
+setSrcErr(result.isNamingError)
 
 })
 
@@ -96,6 +103,8 @@ handleFetch(latitude,longitude,tempUnit,windSpeedUnit,precipitationUnit)
 //console.log(data)
 const datas = {
 data,
+isSrcErr,
+isSrcLoading,
 latitude,
 longitude,
 isLoading,
@@ -106,13 +115,17 @@ tempUnit,
 precipitationUnit,
 windSpeedUnit,
 selectedCountry,
+
 setSelectedCountry,
 setLatitude,
 setLongitude,
 setCountry,
 setPrecipitationUnit,
 setWindSpeedUnit,
-setTempUnit
+setTempUnit,
+setIsError,
+setIsLoading,
+setSrcErr
 }
 
 return (

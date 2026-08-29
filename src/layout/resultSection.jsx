@@ -1,15 +1,18 @@
 import { useContext, useState } from "react";
 import { getWeatherImage } from "../toolkit/weathericon"
 import { DataContext } from "../store/context";
+
 export default function Result(){
 const {country,setCountry} = useContext(DataContext)
-const {isLoading,setIsLoading} = useContext(DataContext)
+const {isLoading,setIsLoading,isError} = useContext(DataContext)
 const {data,setData} = useContext(DataContext)
-
-
+const {isSrcErr} = useContext(DataContext)
+if(isSrcErr){
+  return <h1 className="text-center text-2xl mt-6">No Search Result found!</h1>
+}
 
 return (
-<div className="grid sm:grid-cols-3   grid-cols-1 grid-rows-[auto_auto_auto] mx-3 my-5 gap-x-6 gap-y-1 sm:px-10">
+<div className=" mx-3 my-5 px-4 grid gap-x-3 gap-y-2 sm:grid-cols-[2fr_1fr] sm:grid-rows-[minmax(10rem,19rem)_minmax(10rem,15rem)_minmax(10rem,14rem)] ">
 
 <CurrentWeatherDisplay datas = {data}/>
 <HourlyForeCast datas={data}/>
@@ -30,9 +33,9 @@ const {setSelectedCountry,selectedCountry} = useContext(DataContext)
 
 return (
 
- <div style={{background: isLoading &&"hsl(243, 27%, 20%)"}} className=" p-5 grid col-start-1 col-end-3 row-start-1 row-end-2 grid-cols-1 sm:grid-cols-2 sm:h-60 sm:grid-rows-1 items-center mb-2 rounded-2xl bg-[url('.\.\public\assets\images\bg-today-large.svg')] sm:bg-[url('.\.\public\assets\images\bg-today-large.svg')] bg-no-repeat bg-cover">
+ <div style={{background: isLoading &&"hsl(243, 27%, 20%)"}} className=" p-5 grid items-center mb-2 rounded-2xl bg-[url('.\assets\images\bg-today-small.svg')] sm:bg-[url('.\assets\images\bg-today-large.svg')] bg-no-repeat bg-cover">
 <div className="text-center">
-<img hidden = {!isLoading} src='.\public\assets\images\icon-loading.svg' alt="Weather now" className="block w-17 m-auto"/> 
+<img hidden = {!isLoading} src='.\assets\images\icon-loading.svg' alt="Weather now" className="block w-17 m-auto"/> <span hidden={!isLoading}>Loading ...</span>
 <p className="text-2xl mb-2">{selectedCountry}</p>
 <p className="text-[hsl(250_6%_84%)] text-md mb-3">{ !isLoading && time.slice(0,16)}</p>
 </div>
@@ -50,7 +53,7 @@ const array = ["feels like","Humidity","Wind","Precipitation"]
 const {isLoading} = useContext(DataContext)
 
 if(isLoading){
-return <div  className="p-3 flex flex-wrap gap-2 justify-around mb-10 row-start-2 col-start-1 col-end-3 sm:h-40">
+return <div  className="p-3 flex flex-wrap gap-2 justify-around mb-10">
 {
    array.map((e)=>{
 
@@ -62,14 +65,14 @@ return <div  className="p-3 flex flex-wrap gap-2 justify-around mb-10 row-start-
 }
   const values = datas ? Object?.entries(datas?.current):[]
 values.splice(3,1)
-const units = Object.values(datas.current_units)
+const units = Object.values(datas?.current_units)
 units.splice(0,2)
 units.splice(1,1)
 
 return (
 
-  <div className="p-3 flex flex-wrap gap-2 justify-around row-start-2 col-start-1 col-end-3 sm:h-40">
-  { values.slice(2).map((e,index)=>{
+  <div className="p-3 flex flex-wrap gap-2 justify-between">
+  { values?.slice(2)?.map((e,index)=>{
 
   return < DetailWeatherCard key={e[0]}  data = {e} unit = {units[index]}/>
   
@@ -120,7 +123,7 @@ const {isLoading} = useContext(DataContext)
   const theWeek = ["Sun","Mon","Thue","Wed","Thu","fri","Sat"]
 if(isLoading){
 return (
-  <section className=" flex  gap-6 center mx-auto justify-around">
+  <section className=" flex gap-6 center justify-around sm:col-start-1">
 {
 theWeek.map((e,index)=>{
   return ( 
@@ -139,15 +142,15 @@ const dailyMaxWeather = datas?.daily?.temperature_2m_max;
 const dailyMinWeaterh = datas?.daily?.temperature_2m_min;
 const dailyWeatherCode = datas?.daily?.weather_code
 return (
-  <section className=" sm:my-10 my:19 row-start-3 col-start-1 col-end-3">
+  <section className=" sm:my-10 my:19 col-start-1">
     <h3 className="text-bold text-md mb-2">Daily foreCast</h3>
-    <div className="flex flex-wrap gap-3 justify-around">
+    <div className="flex flex-wrap gap-3 justify-between">
     {
       dailyMaxWeather?.map((e,index)=>{
 const weathecode = getWeatherImage(dailyWeatherCode[index])
      
 
-  return (  <article className=" w-24 bg-[hsl(243_27%_20%)] p-1 rounded-md flex flex-col items-center" key={`{${e}-${index}}`}>
+  return (  <article className=" w-24 bg-[hsl(243_27%_20%)] p-1 rounded-md  flex flex-col items-center" key={`{${e}-${index}}`}>
 <div className="grid grid-column-1 grid-row-2 ">
 <p className="text-center">{theWeek[index]}</p>
 <img className="block w-19" src={weathecode} aria-hidden/>
@@ -184,11 +187,11 @@ const {isLoading} = useContext(DataContext)
 
 if(isLoading){
 return (
-<section className="bg-[hsl(243_27%_20%)]  sm:row-start-1 sm:row-end-4 sm:col-start-3 sm:col-end-3 p-6 rounded-xl">
+<section className="bg-[hsl(243_27%_20%)] p-6 rounded-xl">
   <div className="flex justify-between mb-4 relative">
   <h3>Hourly forecast</h3>
   <button type="button" aria-controls="days-control"  aria-label="choose day you want to see"  className="bg-[hsl(243_23%_30%)] px-3 py-1 rounded-md flex items-center gap-2">
-  <span className="block">{today}</span> <img aria-hidden="true" src=".\.\public\assets\images\icon-dropdown.svg" />
+  <span className="block">{today}</span> <img aria-hidden="true" src=".\assets\images\icon-dropdown.svg" />
   </button>
  
   </div>
@@ -206,9 +209,6 @@ return <HourlyForeCastCard  key={e} />
 }
 
 
-
-
-
 const time = datas?.hourly?.time.filter(e=>{
   return e.includes(requestedDate)
 }).slice(2,10);
@@ -220,14 +220,14 @@ const temperature = datas?.hourly?.temperature_2m.slice(firstIndex,lastIndex+1)
 
 
 return (
-<section className="bg-[hsl(243_27%_20%)]  sm:row-start-1 sm:row-end-4 sm:col-start-3 sm:col-end-3 p-6 rounded-xl">
+<section className="bg-[hsl(243_27%_20%)]  sm:row-start-1 sm:row-end-4 sm:col-start-2 p-6 rounded-xl">
   <div className="flex justify-between mb-4 relative">
   <h3>Hourly forecast</h3>
   <button type="button" aria-controls="days-control" aria-expanded={!expanded} aria-label="choose day you want to see"  className="bg-[hsl(243_23%_30%)] px-3 py-1 rounded-md flex items-center gap-2" onClick={()=>{
   
     setExpanded(!expanded)
   }}>
-  <span className="block">{today}</span> <img aria-hidden="true" src=".\.\public\assets\images\icon-dropdown.svg" />
+  <span className="block">{today}</span> <img aria-hidden="true" src=".\assets\images\icon-dropdown.svg" />
   </button>
   <div hidden={expanded} className="absolute bg-[hsl(243_23%_24%)] right-0 top-9 rounded-xl" id="days-control">
 
