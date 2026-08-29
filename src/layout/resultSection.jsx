@@ -3,6 +3,8 @@ import { getWeatherImage } from "../toolkit/weathericon"
 import { DataContext } from "../store/context";
 import iconDrop from "../assets/images/icon-dropdown.svg";
 import iconLoading from "../assets/images/icon-loading.svg"
+import bigBackground from "./assets/images/bg-today-large.svg";
+import smallBackground from "./assets/images/bg-today-small.svg";
 export default function Result(){
 const {country,setCountry} = useContext(DataContext)
 const {isLoading,setIsLoading,isError} = useContext(DataContext)
@@ -34,7 +36,7 @@ const {setSelectedCountry,selectedCountry} = useContext(DataContext)
 
 return (
 
- <div style={{background: isLoading &&"hsl(243, 27%, 20%)"}} className=" p-5 grid items-center mb-2 rounded-2xl bg-[url('.\assets\images\bg-today-small.svg')] sm:bg-[url('.\assets\images\bg-today-large.svg')] bg-no-repeat bg-cover">
+ <div style={{background: isLoading &&"hsl(243, 27%, 20%)"}}  className={`p-5 grid items-center mb-2 rounded-2xl sm:bg-[url(${bigBackground})] bg-[url(${bigBackground})]  bg-no-repeat bg-cover`}>
 <div className="text-center">
 <img hidden = {!isLoading} src={iconLoading} alt="Weather now" className="block w-17 m-auto"/> <span hidden={!isLoading}>Loading ...</span>
 <p className="text-2xl mb-2">{selectedCountry}</p>

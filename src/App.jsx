@@ -4,7 +4,9 @@ import Result from "./layout/resultSection"
 import { ProvideData } from "./store/context";
 import { DataContext } from "./store/context";
 import { useContext, useState } from "react";
-import iconError from "./assets/images/icon-error.svg"
+import iconError from "./assets/images/icon-error.svg";
+
+import iconRetry from "./assets/images/icon-retry";
 function App() {
 
 return (
@@ -36,7 +38,7 @@ return (
   
  setIsLoading(true)
  window.location.reload()
-  }}><img aria-hidden src=".\assets\images\icon-retry.svg"/><span>Retry</span></button>
+  }}><img aria-hidden src={iconRetry}/><span>Retry</span></button>
 </div>
 )
 }
