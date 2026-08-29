@@ -1,7 +1,8 @@
 import { useContext, useState } from "react";
 import { getWeatherImage } from "../toolkit/weathericon"
 import { DataContext } from "../store/context";
-
+import iconDrop from "../assets/images/icon-dropdown.svg";
+import iconLoading from "../assets/images/icon-loading.svg"
 export default function Result(){
 const {country,setCountry} = useContext(DataContext)
 const {isLoading,setIsLoading,isError} = useContext(DataContext)
@@ -35,13 +36,13 @@ return (
 
  <div style={{background: isLoading &&"hsl(243, 27%, 20%)"}} className=" p-5 grid items-center mb-2 rounded-2xl bg-[url('.\assets\images\bg-today-small.svg')] sm:bg-[url('.\assets\images\bg-today-large.svg')] bg-no-repeat bg-cover">
 <div className="text-center">
-<img hidden = {!isLoading} src='.\assets\images\icon-loading.svg' alt="Weather now" className="block w-17 m-auto"/> <span hidden={!isLoading}>Loading ...</span>
+<img hidden = {!isLoading} src={iconLoading} alt="Weather now" className="block w-17 m-auto"/> <span hidden={!isLoading}>Loading ...</span>
 <p className="text-2xl mb-2">{selectedCountry}</p>
 <p className="text-[hsl(250_6%_84%)] text-md mb-3">{ !isLoading && time.slice(0,16)}</p>
 </div>
 <div className="flex items-center justify-center">
   <img src={imageSrc} className="block w-35 sm:w-30"/>
-    <p className="text-7xl"> {datas?.current?.temperature_2m} <sup>o</sup></p>
+    <p className="text-[clamp(3rem,9vw,12rem)]"> {datas?.current?.temperature_2m} <sup>o</sup></p>
 </div>
   </div>
 )
@@ -227,7 +228,7 @@ return (
   
     setExpanded(!expanded)
   }}>
-  <span className="block">{today}</span> <img aria-hidden="true" src=".\assets\images\icon-dropdown.svg" />
+  <span className="block">{today}</span> <img aria-hidden="true" src={iconDrop} />
   </button>
   <div hidden={expanded} className="absolute bg-[hsl(243_23%_24%)] right-0 top-9 rounded-xl" id="days-control">
 

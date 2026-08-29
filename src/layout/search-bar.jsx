@@ -1,6 +1,6 @@
 import { useState,useEffect,useContext } from "react";
 import { DataContext} from "../store/context"
-
+import searchIcon from "../assets/images/icon-search.svg"
 const SearchBar = ()=>{
   const {isSrcErr,isSrcLoading,setIsSrcLoading,setSrcErr} = useContext(DataContext)
 const {country,setCountry} = useContext(DataContext)
@@ -38,7 +38,7 @@ else{
       }}>
 
 <div className="flex items-center  px-5 ring-2  sm:w-md w-[90%] bg-[hsl(243_23%_24%)] rounded-md py-1 ">
- <img src=".\.\public\assets\images\icon-search.svg"/>
+ <img src={searchIcon}/>
 <input value={country} type="search" className="block  px-4 py-1 sm:w-md  focus:outline-none" placeholder="search for place..." onChange={(e)=>{
 setCountry(e.target.value)
 toggleResultSection(true)
