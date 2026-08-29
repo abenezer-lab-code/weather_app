@@ -6,7 +6,7 @@ import { DataContext } from "./store/context";
 import { useContext, useState } from "react";
 import iconError from "./assets/images/icon-error.svg";
 
-import iconRetry from "./assets/images/icon-retry";
+import iconRetry from "./assets/images/icon-retry.svg";
 function App() {
 
 return (
